@@ -22,14 +22,24 @@ public class Bank {
         return customers.size();
     }
 
+    public Customer getCustomerById(String customerId) {
+        for (Customer customer : customers) {
+            if (customer.getCustomerId().equalsIgnoreCase(customerId)) {
+                return customer;
+            }
+        }
+        return null;
+    }
+
     public void displayAllCustomers() {
-        if(!customers.isEmpty()){
+        if (!customers.isEmpty()) {
             System.out.println("Bank: " + name);
             for (Customer customer : customers) {
                 customer.displayCustomerInfo();
                 System.out.println("-------------------------");
             }
-        } else System.out.println("ERROR: Zero Accounts Found");
-
+        } else {
+            System.out.println("ERROR: Zero Accounts Found");
+        }
     }
 }

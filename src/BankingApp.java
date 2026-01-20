@@ -11,14 +11,15 @@ public class BankingApp {
             System.out.println("\nMenu:");
             System.out.println("1. Add Customer");
             System.out.println("2. Display All Customers");
-            System.out.println("3. Exit");
+            System.out.println("3. Deposit");
+            System.out.println("4. Withdraw");
+            System.out.println("5. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume newline
 
             if (choice == 1) {
-//                System.out.print("Enter customer name: ");
-//                String name = scanner.nextLine();
+                // Add Customer
                 String name = "";
                 while (true) {
                     System.out.print("Enter customer name: ");
@@ -50,9 +51,50 @@ public class BankingApp {
                 System.out.println("Customer ID: " + customerId);
 
             } else if (choice == 2) {
+                // Display all customers
                 bank.displayAllCustomers();
 
             } else if (choice == 3) {
+                // Deposit
+                if (bank.getCustomersCount() == 0) {
+                    System.out.println("No customers available. Please add customers first.");
+                    continue;
+                }
+                Customer customer = selectCustomer(scanner, bank);
+                if (customer == null) continue;
+
+                SavingsAccount account = selectAccount(scanner, customer);
+                if (account == null) continue;
+
+                double amount = readDoubleWithValidation(scanner, "Enter amount to deposit: ");
+                if (amount <= 0) {
+                    System.out.println("Deposit amount must be positive.");
+                } else {
+                    account.deposit(amount);
+                    System.out.println("Deposit successful. New balance: " + account.getBalance());
+                }
+
+            } else if (choice == 4) {
+                // Withdraw
+                if (bank.getCustomersCount() == 0) {
+                    System.out.println("No customers available. Please add customers first.");
+                    continue;
+                }
+                Customer customer = selectCustomer(scanner, bank);
+                if (customer == null) continue;
+
+                SavingsAccount account = selectAccount(scanner, customer);
+                if (account == null) continue;
+
+                double amount = readDoubleWithValidation(scanner, "Enter amount to withdraw: ");
+                if (amount <= 0) {
+                    System.out.println("Withdrawal amount must be positive.");
+                } else {
+                    account.withdraw(amount);
+                    System.out.println("Withdrawal processed. Current balance: " + account.getBalance());
+                }
+
+            } else if (choice == 5) {
                 System.out.println("Thank you for using the banking system. Goodbye!");
                 break;
 
@@ -64,6 +106,39 @@ public class BankingApp {
         scanner.close();
     }
 
+    private static Customer selectCustomer(Scanner scanner, Bank bank) {
+        System.out.println("Select a customer by entering their ID:");
+        bank.displayAllCustomers();
+        System.out.print("Enter customer ID: ");
+        String customerId = scanner.nextLine().trim().toUpperCase();
+
+        Customer customer = bank.getCustomerById(customerId);
+        if (customer == null) {
+            System.out.println("Customer not found.");
+        }
+        return customer;
+    }
+
+    private static SavingsAccount selectAccount(Scanner scanner, Customer customer) {
+        if (customer.getAccounts().isEmpty()) {
+            System.out.println("This customer has no accounts.");
+            return null;
+        }
+        System.out.println("Select an account by entering the account number:");
+        for (SavingsAccount acc : customer.getAccounts()) {
+            System.out.println("Account Number: " + acc.getAccountNumber() + ", Balance: " + acc.getBalance());
+        }
+        System.out.print("Enter account number: ");
+        String accountNumber = scanner.nextLine().trim().toLowerCase();
+
+        for (SavingsAccount acc : customer.getAccounts()) {
+            if (acc.getAccountNumber().equals(accountNumber)) {
+                return acc;
+            }
+        }
+        System.out.println("Account not found.");
+        return null;
+    }
 
     private static double readDoubleWithValidation(Scanner scanner, String prompt) {
         double value = 0;

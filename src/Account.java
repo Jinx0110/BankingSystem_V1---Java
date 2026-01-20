@@ -1,5 +1,5 @@
 public abstract class Account {
-    private final String accountNumber;
+    private String accountNumber;
     private double balance;
 
     public Account(String accountNumber, double initialBalance) {
@@ -15,23 +15,18 @@ public abstract class Account {
         return balance;
     }
 
-    public void deposit(double amount) {
-        if (amount > 0) {
-            balance += amount;
-            System.out.println("Deposited R" + amount + " into account " + accountNumber);
-        } else {
-            System.out.println("Deposit amount must be positive.");
-        }
+    protected void setBalance(double balance) {
+        this.balance = balance;
     }
-
 
     public abstract void withdraw(double amount);
 
-    public void displayAccountInfo() {
-        System.out.println("Account Number: " + accountNumber + ", Balance: $" + balance);
-    }
-
-    protected void setBalance(double balance) {
-        this.balance = balance;
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited $" + amount + " to Account " + accountNumber);
+        } else {
+            System.out.println("Deposit amount must be positive.");
+        }
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 public class Customer {
     private String name;
     private String customerId;
-    private List<Account> accounts;
+    private List<SavingsAccount> accounts;
 
     public Customer(String name, String customerId) {
         this.name = name;
@@ -20,18 +20,23 @@ public class Customer {
         return customerId;
     }
 
-    public void addAccount(Account account) {
-        accounts.add(account);
-    }
-
-    public List<Account> getAccounts() {
+    public List<SavingsAccount> getAccounts() {
         return accounts;
     }
 
+    public void addAccount(SavingsAccount account) {
+        accounts.add(account);
+    }
+
     public void displayCustomerInfo() {
-        System.out.println("Customer: " + name + " (ID: " + customerId + ")");
-        for (Account account : accounts) {
-            account.displayAccountInfo();
+        System.out.println("Customer ID: " + customerId);
+        System.out.println("Name: " + name);
+        if (accounts.isEmpty()) {
+            System.out.println("No accounts found.");
+        } else {
+            for (SavingsAccount account : accounts) {
+                System.out.println("Account Number: " + account.getAccountNumber() + ", Balance: " + account.getBalance());
+            }
         }
     }
 }
