@@ -2,6 +2,14 @@
 
 ## Overview
 This is a simple Java console application that simulates a basic banking system. It allows users to add customers, create savings and checking accounts, deposit and withdraw money, and display customer and account information.
+## Object-Oriented Programming (OOP) Principles
+
+This project applies core OOP principles such as encapsulation, inheritance, and polymorphism. For example:
+- **Encapsulation:** Customer and Account data are encapsulated within their respective classes with private fields and public getters/setters.
+- **Inheritance:** The `SavingsAccount` class extends a base `Account` class (if you have one), demonstrating inheritance.
+- **Polymorphism:** Methods like `deposit` and `withdraw` can be overridden or used polymorphically across different account types.
+
+This design improves code modularity, maintainability, and scalability.
 
 ## Features
 - Add new customers with unique customer IDs
