@@ -44,9 +44,3 @@ This is a simple Java console application that simulates a basic banking system.
 - Handles user input and interaction.
 - Validates inputs including customer name and numeric values.
 
-## How to Run
-
-1. Make sure you have Java JDK 8 or higher installed.
-2. Compile all `.java` files:
-   ```bash
-   javac *.java
